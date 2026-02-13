@@ -22,13 +22,13 @@ public class MJParserTest {
 	}
 	
 	public static void main(String[] args) throws Exception {
+
+		String filename = "test/test301.mj";
+		String objFilename = "test/test301.obj";
+
 		Logger log = Logger.getLogger(MJParserTest.class);
-		if (args.length < 2) {
-			log.error("Not enough arguments supplied! Usage: MJParser <source-file> <obj-file> ");
-			return;
-		}
 		
-		File sourceCode = new File(args[0]);
+		File sourceCode = new File(filename);
 		if (!sourceCode.exists()) {
 			log.error("Source file [" + sourceCode.getAbsolutePath() + "] not found!");
 			return;
@@ -50,7 +50,7 @@ public class MJParserTest {
 	        Tab.dump();
 	        
 	        if (!p.errorDetected && semanticCheck.passed()) {
-	        	File objFile = new File(args[1]);
+	        	File objFile = new File(objFilename);
 	        	log.info("Generating bytecode file: " + objFile.getAbsolutePath());
 	        	if (objFile.exists())
 	        		objFile.delete();

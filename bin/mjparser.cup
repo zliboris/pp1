@@ -59,6 +59,11 @@ terminal Integer NUMBER ;
 terminal String IDENT ;
 terminal IF, ELSE;
 
+terminal BREAK, ENUM, CLASS, ABSTRACT, CONST, NEW, READ, EXTERN, CONTINUE, FOR, LENGTH, SWITCH, CASE;
+terminal Character CHAR;
+terminal Integer BOOL;
+terminal MINUS, MUL, DIV, MODUL, EQUALS, NOTEQUALS, GREATER, GREATEREQUAL, LESS, LESSEQUAL, AND, OR, INC, DEC, COLON, FULLSTOP, LBRACK, RBRACK, QMARK;
+
 nonterminal MethodDeclList, VarDecl;
 nonterminal FormalParamList, FormalParamDecl, FormPars, ActualPars, ActualParamList; 
 nonterminal StatementList, Statement, Addop;
