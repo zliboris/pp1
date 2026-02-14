@@ -1,0 +1,19 @@
+// Simple test
+program simpletest
+int niz[];
+int a;
+{
+	void main()
+		int i;
+	{
+		a = 5;
+		print(a);
+		print(eol);
+		niz = new int[3];
+		print(niz.length);
+		print(eol);
+		niz[0] = 10;
+		print(niz[0]);
+		print(eol);
+	}
+}
