@@ -1,0 +1,63 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run MJTest",
+            "request": "launch",
+            "mainClass": "rs.ac.bg.etf.pp1.MJTest",
+            "args": "",
+            "classPaths": [
+                "${workspaceFolder}\\bin",
+                "${workspaceFolder}\\lib\\cup_v10k.jar",
+                "${workspaceFolder}\\lib\\JFlex.jar",
+                "${workspaceFolder}\\lib\\log4j-1.2.17.jar",
+                "${workspaceFolder}\\lib\\symboltable.jar",
+                "${workspaceFolder}\\lib\\mj-runtime.jar",
+                "${workspaceFolder}\\config"
+            ],
+            "preLaunchTask": "ant-compile"
+        },
+        {
+            "type": "java",
+            "name": "Run MJParserTest",
+            "request": "launch",
+            "mainClass": "rs.ac.bg.etf.pp1.MJParserTest",
+            "args": "",
+            "classPaths": [
+                "${workspaceFolder}\\bin",
+                "${workspaceFolder}\\lib\\cup_v10k.jar",
+                "${workspaceFolder}\\lib\\JFlex.jar",
+                "${workspaceFolder}\\lib\\log4j-1.2.17.jar",
+                "${workspaceFolder}\\lib\\symboltable.jar",
+                "${workspaceFolder}\\lib\\mj-runtime.jar",
+                "${workspaceFolder}\\config"
+            ],
+            "preLaunchTask": "ant-compile"
+        },
+        {
+            "type": "java",
+            "name": "Run MJTest (No Build)",
+            "request": "launch",
+            "mainClass": "rs.ac.bg.etf.pp1.MJTest",
+            "args": "",
+            "classPaths": [
+                "${workspaceFolder}\\bin",
+                "${workspaceFolder}\\lib\\cup_v10k.jar",
+                "${workspaceFolder}\\lib\\JFlex.jar",
+                "${workspaceFolder}\\lib\\log4j-1.2.17.jar",
+                "${workspaceFolder}\\lib\\symboltable.jar",
+                "${workspaceFolder}\\lib\\mj-runtime.jar",
+                "${workspaceFolder}\\config"
+            ]
+        },
+        {
+            "name": "Run MJTest (Terminal)",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "java -cp \"bin;lib/*;config\" rs.ac.bg.etf.pp1.MJTest",
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "ant-compile"
+        }
+    ]
+}

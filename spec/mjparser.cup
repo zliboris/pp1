@@ -59,30 +59,49 @@ terminal Integer NUMBER ;
 terminal String IDENT ;
 terminal IF, ELSE;
 
-terminal BREAK, ENUM, CLASS, ABSTRACT, CONST, NEW, READ, EXTERN, CONTINUE, FOR, LENGTH, SWITCH, CASE;
+terminal BREAK, ENUM, CLASS, ABSTRACT, CONST, NEW, READ, EXTERN;
+terminal CONTINUE, FOR, LENGTH, SWITCH, CASE;
 terminal Character CHAR;
 terminal Integer BOOL;
-terminal MINUS, MUL, DIV, MODUL, EQUALS, NOTEQUALS, GREATER, GREATEREQUAL, LESS, LESSEQUAL, AND, OR, INC, DEC, COLON, FULLSTOP, LBRACK, RBRACK, QMARK;
+terminal MINUS, MUL, DIV, MODUL;
+terminal EQUALS, NOTEQUALS, GREATER, GREATEREQUAL, LESS, LESSEQUAL;
+terminal AND, OR, INC, DEC, COLON, FULLSTOP, LBRACK, RBRACK, QMARK;
 
 nonterminal MethodDeclList, VarDecl;
 nonterminal FormalParamList, FormalParamDecl, FormPars, ActualPars, ActualParamList; 
 nonterminal StatementList, Statement, Addop;
 nonterminal Unmatched, Matched;
 
+nonterminal AllDeclList, ConstDecl, ClassDecl, EnumDecl, AbstractClassDecl;
+nonterminal Mulop, Relop;
+
 nonterminal rs.etf.pp1.symboltable.concepts.Obj Program, ProgName, Designator, MethodDecl, MethodTypeName; 
 nonterminal rs.etf.pp1.symboltable.concepts.Struct Type, Term, Expr, Factor, VarDeclList; 
 
-Program ::= (Program) PROG ProgName:p VarDeclList LBRACE MethodDeclList RBRACE 
+Program ::= (Program) PROG ProgName:p AllDeclList LBRACE MethodDeclList RBRACE 
 ;
 
 ProgName ::= (ProgName) IDENT:pName 
 ;
 
+AllDeclList ::= (ConstDeclaration) AllDeclList ConstDecl
+				|
+				(VarDeclaration) AllDeclList VarDecl
+				|
+				(ClassDeclaration) AllDeclList ClassDecl
+				|
+				(EnumDeclaration) AllDeclList EnumDecl
+				|
+				(AbstractClassDeclaration) AllDeclList AbstractClassDecl
+				|
+				(NoDeclaration)
+				;
+
 VarDeclList ::= (VarDeclarations) VarDeclList VarDecl  
 				|
 				(NoVarDecl)/* epsilon */ 
 				;
-				
+
 VarDecl ::= (VarDecl) Type:varType IDENT:varName SEMI 
 ;
 
@@ -161,7 +180,39 @@ ActualParamList ::= (ActualParams) ActualParamList COMMA Expr
 					(ActualParam) Expr
 					;
 
-Designator ::= (Designator) IDENT:name
-;
+Designator ::= 	(Designator) IDENT:name
+				|
+				(Designdotident) Designator FULLSTOP IDENT:name
+				|
+				(Designdotlength) Designator FULLSTOP LENGTH
+				|
+				(Designexpr) Designator LBRACK Expr RBRACK
+				;
 
-Addop ::= (Addop) PLUS ;
+Assignop::=	(Assignop) EQUAL
+;	
+
+Relop ::=	(Equalsop) EQUALS
+			|
+			(Notequalsop) NOTEQUALS
+			|
+			(Greaterop) GREATER
+			|
+			(Greaterequalop) GREATEREQUAL
+			|
+			(Lessop) LESS
+			|
+			(Lessequalop) LESSEQUAL
+			;
+
+Addop ::= 	(Addop) PLUS
+			|
+			(Subop) MINUS
+			;
+
+Mulop ::=	(Mulop) MUL
+			|
+			(Divop) DIV
+			|
+			(Modop) MODUL
+			;
