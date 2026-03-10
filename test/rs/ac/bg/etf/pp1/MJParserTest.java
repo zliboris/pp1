@@ -22,13 +22,13 @@ public class MJParserTest {
 	}
 	
 	public static void main(String[] args) throws Exception {
+
+		String filename = args.length > 0 ? args[0] : "test/test303.mj";
+		String objFilename = args.length > 1 ? args[1] : filename.replaceAll("\\.mj$", ".obj");
+
 		Logger log = Logger.getLogger(MJParserTest.class);
-		if (args.length < 2) {
-			log.error("Not enough arguments supplied! Usage: MJParser <source-file> <obj-file> ");
-			return;
-		}
 		
-		File sourceCode = new File(args[0]);
+		File sourceCode = new File(filename);
 		if (!sourceCode.exists()) {
 			log.error("Source file [" + sourceCode.getAbsolutePath() + "] not found!");
 			return;
@@ -46,19 +46,19 @@ public class MJParserTest {
 			SemanticPass semanticCheck = new SemanticPass();
 			prog.traverseBottomUp(semanticCheck);
 			
-	        log.info("Print calls = " + semanticCheck.printCallCount);
-	        Tab.dump();
+	        Tab.dump(new DumpVisitor());
 	        
 	        if (!p.errorDetected && semanticCheck.passed()) {
-	        	File objFile = new File(args[1]);
+	        	File objFile = new File(objFilename);
 	        	log.info("Generating bytecode file: " + objFile.getAbsolutePath());
 	        	if (objFile.exists())
 	        		objFile.delete();
 	        	
 	        	// Code generation...
 	        	CodeGenerator codeGenerator = new CodeGenerator();
+				codeGenerator.numOfStaticVars = semanticCheck.nVars;
 	        	prog.traverseBottomUp(codeGenerator);
-	        	Code.dataSize = semanticCheck.nVars;
+	        	Code.dataSize = codeGenerator.getDataSize();
 	        	Code.mainPc = codeGenerator.getMainPc();
 	        	Code.write(new FileOutputStream(objFile));
 	        	log.info("Parsiranje uspesno zavrseno!");

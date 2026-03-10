@@ -1,0 +1,219 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "ant-compile",
+            "type": "shell",
+            "command": "ant",
+            "args": ["compile"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "ant-clean",
+            "type": "shell",
+            "command": "ant",
+            "args": ["delete"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "run-mjtest",
+            "type": "process",
+            "command": "java",
+            "args": [
+                "-cp",
+                "bin;lib/cup_v10k.jar;lib/JFlex.jar;lib/log4j-1.2.17.jar;lib/symboltable.jar;lib/mj-runtime.jar;config",
+                "rs.ac.bg.etf.pp1.MJTest"
+            ],
+            "dependsOn": ["ant-compile"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "run-mjparsertest",
+            "type": "process",
+            "command": "java",
+            "args": [
+                "-cp",
+                "bin;lib/cup_v10k.jar;lib/JFlex.jar;lib/log4j-1.2.17.jar;lib/symboltable.jar;lib/mj-runtime.jar;config",
+                "rs.ac.bg.etf.pp1.MJParserTest"
+            ],
+            "dependsOn": ["ant-compile"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "compile-current-mj",
+            "type": "process",
+            "command": "java",
+            "args": [
+                "-cp",
+                "bin;lib/cup_v10k.jar;lib/JFlex.jar;lib/log4j-1.2.17.jar;lib/symboltable.jar;lib/mj-runtime.jar;config",
+                "rs.ac.bg.etf.pp1.MJParserTest",
+                "${file}",
+                "${fileDirname}\\${fileBasenameNoExtension}.obj"
+            ],
+            "dependsOn": ["ant-compile"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "compile-current-mj-only",
+            "dependsOn": ["compile-current-mj"],
+            "dependsOrder": "sequence",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "compile-and-debug-current-mj",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "tools\\debug-open.ps1",
+                "-ObjPath",
+                "${fileDirname}\\${fileBasenameNoExtension}.obj",
+                "-DebugOut",
+                "logs\\debug-${fileBasenameNoExtension}-latest.txt",
+                "-WindowMode",
+                "reuse"
+            ],
+            "dependsOn": ["compile-current-mj"],
+            "dependsOrder": "sequence",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "compile-and-run-current-mj",
+            "type": "process",
+            "command": "java",
+            "args": [
+                "-cp",
+                "bin;lib/mj-runtime.jar",
+                "rs.etf.pp1.mj.runtime.Run",
+                "${fileDirname}\\${fileBasenameNoExtension}.obj"
+            ],
+            "dependsOn": ["compile-current-mj"],
+            "dependsOrder": "sequence",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "compile-and-disasm-current-mj",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "tools\\disasm-open.ps1",
+                "-ObjPath",
+                "${fileDirname}\\${fileBasenameNoExtension}.obj",
+                "-DisasmOut",
+                "logs\\disasm-${fileBasenameNoExtension}-latest.txt",
+                "-WindowMode",
+                "new"
+            ],
+            "dependsOn": ["compile-current-mj"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "compile-and-disasm-current-mj-same-window",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "tools\\disasm-open.ps1",
+                "-ObjPath",
+                "${fileDirname}\\${fileBasenameNoExtension}.obj",
+                "-DisasmOut",
+                "logs\\disasm-${fileBasenameNoExtension}-latest.txt",
+                "-WindowMode",
+                "reuse"
+            ],
+            "dependsOn": ["compile-current-mj"],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "compile-disasm-debug-current-mj",
+            "dependsOn": [
+                "compile-and-disasm-current-mj-same-window",
+                "compile-and-debug-current-mj"
+            ],
+            "dependsOrder": "sequence",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

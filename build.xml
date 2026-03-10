@@ -6,6 +6,7 @@
         <delete file="src/rs/ac/bg/etf/pp1/MJParser.java"/>
         <delete file="src/rs/ac/bg/etf/pp1/sym.java"/>
         <delete dir="src/rs/ac/bg/etf/pp1/ast"/>
+        <delete dir="bin/rs"/>
     </target>
 
 	<target name="lexerGen" depends="delete">
@@ -20,6 +21,8 @@
 		<java jar="lib/cup_v10k.jar" fork="true">
 			<arg value="-destdir"/>
 			<arg value="src/rs/ac/bg/etf/pp1"/>
+			<arg value="-expect"/>
+			<arg value="1"/>
 			<arg value="-ast"/>
 			<arg value="src.rs.ac.bg.etf.pp1.ast"/>
 			<arg value="-parser"/>
@@ -36,8 +39,20 @@
 	</target>
 
 	<target name="compile" depends="repackage">
-		<javac srcdir="src/rs/ac/bg/etf/pp1" includeantruntime="false">
+		<javac srcdir="src" destdir="bin" includeantruntime="false" encoding="UTF-8" source="1.8" target="1.8">
 			<classpath>
+				<pathelement path="lib/JFlex.jar"/>
+				<pathelement path="lib/cup_v10k.jar"/>
+				<pathelement path="lib/log4j-1.2.17.jar"/>
+				<pathelement path="lib/symboltable.jar"/>
+				<pathelement path="lib/mj-runtime.jar"/>
+			</classpath>
+		</javac>
+		<delete file="bin/rs/ac/bg/etf/pp1/MJTest.class" failonerror="false"/>
+		<delete file="bin/rs/ac/bg/etf/pp1/MJParserTest.class" failonerror="false"/>
+		<javac srcdir="test" destdir="bin" includeantruntime="false" encoding="UTF-8" source="1.8" target="1.8">
+			<classpath>
+				<pathelement path="bin"/>
 				<pathelement path="lib/JFlex.jar"/>
 				<pathelement path="lib/cup_v10k.jar"/>
 				<pathelement path="lib/log4j-1.2.17.jar"/>
@@ -49,7 +64,7 @@
 
 	<target name="disasm">
 		<java classname="rs.etf.pp1.mj.runtime.disasm">
-			<arg value="test/program.obj"/>
+			<arg value="test/test301.obj"/>
 			<classpath>
 				<pathelement location="lib/mj-runtime.jar"/>
 			</classpath>
@@ -58,7 +73,7 @@
 
 	<target name="runObj" depends="disasm" >
 		<java classname="rs.etf.pp1.mj.runtime.Run">
-			<arg value="test/program.obj"/>
+			<arg value="test/test303.obj"/>
 			<classpath>
 				<pathelement location="lib/mj-runtime.jar"/>
 			</classpath>

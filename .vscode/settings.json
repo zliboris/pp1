@@ -1,0 +1,22 @@
+{
+    "java.project.sourcePaths": [
+        "src",
+        "test",
+        "spec"
+    ],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "config"
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.import.gradle.enabled": false,
+    "java.import.maven.enabled": false,
+    "chat.tools.terminal.autoApprove": {
+        "ant": true,
+        "java": true,
+        "javap": true,
+        "&": true,
+        "gc": true
+    }
+}
