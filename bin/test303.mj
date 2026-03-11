@@ -88,6 +88,7 @@ int tezinaK, tezinaS;
 		k1.postaviStranice(1,2,3);
 		k2.postaviStranice(2,3,4);
 		k3.postaviStranice(3,4,5);
+		k3.zapremina();
 		
 		predmeti[0] = s1;
 		predmeti[2] = s2;

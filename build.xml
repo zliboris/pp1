@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="MJCompiler" default="compile" basedir=".">
+	<property name="mj.input" value="test/test303.mj"/>
+	<property name="mj.output" value="test/test303.obj"/>
 
 	<target name="delete">
         <delete file="src/rs/ac/bg/etf/pp1/Yylex.java"/>
@@ -62,9 +64,9 @@
 		</javac>
 	</target>
 
-	<target name="disasm">
+	<target name="disasm" depends="compileMj">
 		<java classname="rs.etf.pp1.mj.runtime.disasm">
-			<arg value="test/test301.obj"/>
+			<arg value="${mj.output}"/>
 			<classpath>
 				<pathelement location="lib/mj-runtime.jar"/>
 			</classpath>
@@ -72,10 +74,26 @@
 	</target>
 
 	<target name="runObj" depends="disasm" >
-		<java classname="rs.etf.pp1.mj.runtime.Run">
-			<arg value="test/test303.obj"/>
+		<java classname="rs.etf.pp1.mj.runtime.Run" input="test/inputtest">
+			<arg value="${mj.output}"/>
 			<classpath>
 				<pathelement location="lib/mj-runtime.jar"/>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="compileMj" depends="compile">
+		<java classname="rs.ac.bg.etf.pp1.MJParserTest" fork="true" failonerror="true">
+			<arg value="${mj.input}"/>
+			<arg value="${mj.output}"/>
+			<classpath>
+				<pathelement path="bin"/>
+				<pathelement path="lib/JFlex.jar"/>
+				<pathelement path="lib/cup_v10k.jar"/>
+				<pathelement path="lib/log4j-1.2.17.jar"/>
+				<pathelement path="lib/symboltable.jar"/>
+				<pathelement path="lib/mj-runtime.jar"/>
+				<pathelement path="config"/>
 			</classpath>
 		</java>
 	</target>
