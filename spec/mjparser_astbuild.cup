@@ -48,7 +48,7 @@ terminal PROG, PRINT, RETURN, VOID;
 terminal PLUS, EQUAL, SEMI, COMMA, LPAREN, RPAREN, LBRACE, RBRACE;
 terminal MINUS, MUL, DIV, MODUL;
 terminal EQUALS, NOTEQUALS, GREATER, GREATEREQUAL, LESS, LESSEQUAL;
-terminal AND, OR, INC, DEC;
+terminal AND, OR, INC, INC2, DEC;
 terminal COLON, FULLSTOP, LBRACK, RBRACK, QMARK;
 terminal BREAK, ENUM, CLASS, ABSTRACT, IF, ELSE, CONST, NEW, READ;
 terminal EXTENDS, CONTINUE, FOR, LENGTH, SWITCH, CASE;
@@ -323,6 +323,8 @@ DesignatorStatement ::= (Assignment) Designator:D1 Assignop:A2 Expr:E3 {: RESULT
 (ProcCallPars) Designator:D1 LPAREN ActPars:A2 RPAREN {: RESULT=new ProcCallPars(D1, A2); RESULT.setLine(D1left); :} 
 |
 (Increment) Designator:D1 INC {: RESULT=new Increment(D1); RESULT.setLine(D1left); :}
+|
+(IncrementByTwo) Designator:D1 INC2 {: RESULT=new IncrementByTwo(D1); RESULT.setLine(D1left); :}
 |
 (Decrement) Designator:D1 DEC {: RESULT=new Decrement(D1); RESULT.setLine(D1left); :}
 ;
