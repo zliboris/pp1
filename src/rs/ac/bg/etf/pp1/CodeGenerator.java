@@ -212,6 +212,18 @@ public class CodeGenerator extends VisitorAdaptor {
 		Code.put(Code.add);
 		Code.store(obj);
 	}
+
+	@Override
+	public void visit(IncrementByTwo increment) {
+		Obj obj = increment.getDesignator().obj;
+		if (obj.getKind() == Obj.Elem) {
+			Code.put(Code.dup2);
+		}
+		Code.load(obj);
+		Code.loadConst(2);
+		Code.put(Code.add);
+		Code.store(obj);
+	}
 	
 	@Override
 	public void visit(Decrement decrement) {

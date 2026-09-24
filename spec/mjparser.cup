@@ -48,7 +48,7 @@ terminal PROG, PRINT, RETURN, VOID;
 terminal PLUS, EQUAL, SEMI, COMMA, LPAREN, RPAREN, LBRACE, RBRACE;
 terminal MINUS, MUL, DIV, MODUL;
 terminal EQUALS, NOTEQUALS, GREATER, GREATEREQUAL, LESS, LESSEQUAL;
-terminal AND, OR, INC, DEC;
+terminal AND, OR, INC, INC2, DEC;
 terminal COLON, FULLSTOP, LBRACK, RBRACK, QMARK;
 terminal BREAK, ENUM, CLASS, ABSTRACT, IF, ELSE, CONST, NEW, READ;
 terminal EXTENDS, CONTINUE, FOR, LENGTH, SWITCH, CASE;
@@ -293,6 +293,8 @@ DesignatorStatement ::= (Assignment) Designator Assignop Expr
 (ProcCallPars) Designator LPAREN ActPars RPAREN 
 |
 (Increment) Designator INC
+|
+(IncrementByTwo) Designator INC2
 |
 (Decrement) Designator DEC
 ;

@@ -257,6 +257,19 @@ public class SemanticPass extends VisitorAdaptor {
 			report_error("Greska: inkrement samo za int", increment);
 		}
 	}
+
+	public void visit(IncrementByTwo increment) {
+		Obj desObj = increment.getDesignator().obj;
+		if (desObj == null || desObj == Tab.noObj) return;
+
+		int kind = desObj.getKind();
+		if (kind != Obj.Var && kind != Obj.Elem && kind != Obj.Fld) {
+			report_error("Greska: inkrement samo za promenljive", increment);
+		}
+		if (desObj.getType() != Tab.intType) {
+			report_error("Greska: inkrement samo za int", increment);
+		}
+	}
 	
 	public void visit(Decrement decrement) {
 		Obj desObj = decrement.getDesignator().obj;
@@ -516,4 +529,3 @@ public class SemanticPass extends VisitorAdaptor {
 		return !errorDetected;
 	}
 }
-

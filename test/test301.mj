@@ -27,7 +27,8 @@ int a;
 		bodovi = bodovi + jedan;
 		bodovi = bodovi * pet;
 		bodovi--;
-		print(bodovi); //9
+		bodovi+++;
+		print(bodovi); //11
 		print(eol);
 		
 		niz = new int[3];
@@ -67,5 +68,4 @@ int a;
 		
 	}
 }
-
 
